@@ -27,7 +27,9 @@ Load the query results into a Pandas DataFrame. Explicitly set the column names.
 
 Sort the DataFrame values by "date".
 
-Plot the results by using the DataFrame plot method.
+Plot the results by using the DataFrame plot method:
+
+![precipitation](https://github.com/user-attachments/assets/a128efc6-3886-44e4-8fd5-6f1fb1426352)
 
 Use Pandas to print the summary statistics for the precipitation data.
 
@@ -49,6 +51,8 @@ Design a query to get the previous 12 months of temperature observation (TOBS) d
   	• Query the previous 12 months of TOBS data for that station.
   
   	• Plot the results as a histogram with bins=12, as the following image shows:
+
+   ![station-histogram](https://github.com/user-attachments/assets/bd136073-e343-42e5-9e97-a493a40f7caa)
 
 Close your session.
 
