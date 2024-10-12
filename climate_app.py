@@ -106,5 +106,38 @@ def tobs():
     #Return the JSON representation of the list
     return jsonify(temp_data)
 
+@app.route("/api/v1.0/<start>")
+@app.route("/api/v1.0/<start>/<end>")
+def temperature_stats(start, end=None):
+    #Create session (link) from Python to DB
+    session = Session(engine)
+
+    #Query for min, avg, max temps based on end date
+    if end:
+        #If end date provided, calculate stats for date range
+        results = session.query(func.min(Measurement.tobs),
+                                func.avg(Measurement.tobs),
+                                func.max(Measurement.tobs)).\
+                        filter(Measurement.date >= start).\
+                        filter(Measurement.date <= end).all()
+    else:
+        #If non end date, calculate stats for dates greater or equal to start
+        results = session.query(func.min(Measurement.tobs),
+                                func.avg(Measurement.tobs),
+                                func.max(Measurement.tobs)).\
+                        filter(Measurement.date >= start).all()
+    #Close the session
+    session.close()
+
+    #Extract the results
+    temp_stats = list(results[0])
+
+    #Return the results as JSON
+    return jsonify ({
+        "TMIN": temp_stats[0],
+        "TAVG": temp_stats[1],
+        "TMAX": temp_stats[2]
+    })
+
 if __name__ == "__main__":
     app.run(debug=True)
